@@ -54,8 +54,14 @@ public class AppSpringDataTest {
 			System.out.println(usuarioSpringData.getLogin());
 			System.out.println(usuarioSpringData.getSenha());
 			System.out.println("--------------------------");
-
-
 		}
+	}
+	
+	@Test
+	public void testeUpdate() {
+		Optional<UsuarioSpringData> usuarioSpringData = interfaceSpringDataUser.findById(2L);
+		UsuarioSpringData data = usuarioSpringData.get();
+		data.setNome("Larine Godoy Landgraf");
+		interfaceSpringDataUser.save(data);
 	}
 }
