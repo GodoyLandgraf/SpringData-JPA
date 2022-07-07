@@ -1,5 +1,6 @@
 package projeto.spring;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class AppSpringDataTest {
 		usuarioSpringData.setEmail("matheus_godoyland@hotmail.com");
 		usuarioSpringData.setIdade(24);
 		usuarioSpringData.setLogin("smookew");
-		usuarioSpringData.setNome("Matheus Godoy Landgraf");
+		usuarioSpringData.setNome("Larine Godoy Landgraf");
 		usuarioSpringData.setSenha("123teste123");
 		interfaceSpringDataUser.save(usuarioSpringData);
 		
@@ -34,7 +35,7 @@ public class AppSpringDataTest {
 	
 	@Test
 	public void testeConsulta() throws Exception{
-		Optional<UsuarioSpringData> usuarioSpringData = interfaceSpringDataUser.findById(2L);
+		Optional<UsuarioSpringData> usuarioSpringData = interfaceSpringDataUser.findById(3L);
 		System.out.println(usuarioSpringData.get().getId());
 		System.out.println(usuarioSpringData.get().getNome());
 		System.out.println(usuarioSpringData.get().getIdade());
@@ -64,4 +65,24 @@ public class AppSpringDataTest {
 		data.setNome("Larine Godoy Landgraf");
 		interfaceSpringDataUser.save(data);
 	}
+	
+	@Test
+	public void testeDelete() {
+		interfaceSpringDataUser.deleteById(2L);
+	}
+	
+	@Test
+	public void testeConsultaNome() {
+		List<UsuarioSpringData> list = interfaceSpringDataUser.burscaPorNome("Matheus");
+		
+		for (UsuarioSpringData usuarioSpringData : list) {
+			System.out.println(usuarioSpringData.getId());
+			System.out.println(usuarioSpringData.getNome());
+			System.out.println(usuarioSpringData.getEmail());
+			System.out.println(usuarioSpringData.getIdade());
+			System.out.println(usuarioSpringData.getLogin());
+			System.out.println(usuarioSpringData.getSenha());
+			System.out.println("--------------------------");
+	}
+}
 }
