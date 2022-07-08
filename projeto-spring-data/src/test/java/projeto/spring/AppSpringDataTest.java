@@ -10,6 +10,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import projeto.spring.dao.InterfaceSpringDataUser;
+import projeto.spring.dao.InterfaceTelefone;
+import projeto.spring.model.Telefone;
 import projeto.spring.model.UsuarioSpringData;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -19,13 +21,16 @@ public class AppSpringDataTest {
 	@Autowired
 	private InterfaceSpringDataUser interfaceSpringDataUser;
 	
+	@Autowired
+	private InterfaceTelefone interfaceTelefone;
+	
 	@Test
 	public void testeInsert() throws Exception {
 		UsuarioSpringData usuarioSpringData = new UsuarioSpringData();
 		usuarioSpringData.setEmail("matheus_godoyland@hotmail.com");
 		usuarioSpringData.setIdade(24);
 		usuarioSpringData.setLogin("smookew");
-		usuarioSpringData.setNome("Alex");
+		usuarioSpringData.setNome("Junior");
 		usuarioSpringData.setSenha("123teste123");
 		interfaceSpringDataUser.save(usuarioSpringData);
 		
@@ -42,6 +47,11 @@ public class AppSpringDataTest {
 		System.out.println(usuarioSpringData.get().getLogin());
 		System.out.println(usuarioSpringData.get().getSenha());
 		System.out.println(usuarioSpringData.get().getEmail());
+		
+		for (Telefone telefone : usuarioSpringData.get().getTelefones()) {
+			System.out.println(telefone.getTipo());
+			System.out.println(telefone.getNumero());	
+		}
 	}
 	
 	@Test
@@ -107,6 +117,16 @@ public class AppSpringDataTest {
 	@Test
 	public void testeUpdateEmailPorNome() {
 		interfaceSpringDataUser.updateEmailPorNome("egidio@hotmail.com", "Egidio");
+	}
+	
+	@Test
+	public void testeInsertTelefone() {
+	Optional<UsuarioSpringData> usuarioSpringData = interfaceSpringDataUser.findById(3L);
+	Telefone telefone = new Telefone();
+	telefone.setTipo("casa");
+	telefone.setNumero("35245774");
+	telefone.setUsuarioSpringData(usuarioSpringData.get());
+	interfaceTelefone.save(telefone);
 	}
 	
 }
