@@ -2,6 +2,9 @@ package projeto.spring.dao;
 
 import java.util.List;
 
+import javax.persistence.LockModeType;
+
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -28,6 +31,7 @@ public interface InterfaceSpringDataUser extends CrudRepository<UsuarioSpringDat
 	public void updateEmailPorNome(String email, String nome);
 	
 	
+	@Lock(LockModeType.READ)   //Controle de transações - quando um usuario ta consultando o objeto, o outro nao pode atualizar.
 	@Transactional(readOnly = true)  //APENAS LEITURA ( NÃO FAZ MODIFICAÇÕES NA DB)
 	@Query(value = "select p from UsuarioSpringData p where p.nome  =:paramnome")
 	public UsuarioSpringData buscaPorNomeParam(@Param("paramnome") String paramnome);
